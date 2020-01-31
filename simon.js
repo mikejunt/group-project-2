@@ -8,7 +8,6 @@ function buttonClick() {
     for (let i = 1; i <= 4; i++) {
         let buttons = document.getElementById(i);
         buttons.addEventListener("click", function () {
-            playerarray.push(this.id); console.log(`Button ${this.id} pushed.`);
             if (parseInt(this.id) != computerarray[clicks]) {
                 console.log(`Didnt Match loss follows. ${this.id} ${computerarray[clicks]}`);
                 lossfunction()
@@ -34,7 +33,7 @@ function initialize(length = 4) {
         computerarray.push(pick);
     }
     console.log("Computer Array Generated.");
-    let lights = document.getElementById(computerarray[])
+    // let lights = document.getElementById(computerarray[])
 }
 
 
