@@ -1,5 +1,5 @@
 let computerarray = [];
-let playerarray = [];
+let playerarray = []
 let clicks = 0;
 let countup;
 
@@ -9,12 +9,13 @@ function buttonClick() {
     for (let i = 1; i <= 4; i++) {
         let buttons = document.getElementById(i);
         buttons.addEventListener("click", function () {
+            playerarray.push(parseInt(this.id));
             if (parseInt(this.id) != computerarray[clicks]) {
                 console.log(`Didnt Match loss follows. ${this.id} ${computerarray[clicks]}`);
                 lossfunction()
             }
             clicks++;
-            if (computerarray.length === clicks) {
+            if (computerarray.length === clicks && computerarray === playerarray) {
                 computerarray = [];
                 clicks++;
                 initialize(clicks);
@@ -24,7 +25,6 @@ function buttonClick() {
             console.log(`${clicks} clicks so far.`)
         })
     }
-
     console.log("For loop complete.")
 }
 
@@ -35,6 +35,7 @@ function initialize(length = 4) {
     }
     console.log("Computer Array Generated.");
     countup = 0;
+    playerarray = [];
     highlighter();
 }
 
@@ -53,8 +54,12 @@ function highlighter() {
     }, 1500)
 }
 
-
-
+for (let i = 1; i < 5; i++) {
+    let target = document.getElementById(i);
+    console.log (`target picked, it is ${target.id}`)
+    target.addEventListener("mousedown", function () { this.classList.add("highlight");console.log(`Mouse down on ${this.id}`) });
+    target.addEventListener("mouseup", function () { this.classList.remove("highlight"); console.log(`Mouse up on ${this.id}`) })
+}
 
 
 
