@@ -1,0 +1,48 @@
+.main, .header{
+    display: block;
+}
+.text-align{
+    text-align: center;
+}
+.heading{
+    color: solid black;
+}
+.container{
+    display: flex;
+    flex-flow: row wrap;
+}
+.content{
+    width: 100%;
+    margin: auto;
+    height: 50px;
+    margin: 5px;
+}
+.buttonContainer{
+    justify-content: space-around;
+}
+.red{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+.blue{
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+}
+.lightyellow{
+    background-color: #FAF441;
+}
+.yellow{
+    width: 100px;
+    height: 100px;
+    background-color: #FBF31D;
+}
+.green{
+    width: 100px;
+    height: 100px;
+    background-color: green;
+}
+.lightgreen{
+    background-color: #3BB91E;
+}
