@@ -33,8 +33,13 @@ function initialize(length = 4) {
         computerarray.push(pick);
     }
     console.log("Computer Array Generated.");
-    // let lights = document.getElementById(computerarray[])
+    let countup = 0;
+    
+
+
 }
+
+function highlight() {}
 
 
 

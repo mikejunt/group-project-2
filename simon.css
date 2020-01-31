@@ -30,9 +30,6 @@
     height: 100px;
     background-color: blue;
 }
-.lightyellow{
-    background-color: #FAF441;
-}
 .yellow{
     width: 100px;
     height: 100px;
@@ -43,6 +40,10 @@
     height: 100px;
     background-color: green;
 }
-.lightgreen{
-    background-color: #3BB91E;
+
+.inactive-state {
+    opacity: 0.5;
+}
+.highlight {
+    opacity: 1;
 }
