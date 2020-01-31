@@ -13,12 +13,12 @@ function buttonClick() {
                 lossfunction()
             }
             clicks++;
-            if (computerarray.length === clicks) {  
-            computerarray = [];
-            clicks++;
-            initialize(clicks);
-            clicks = 0;
-            winfunction();  
+            if (computerarray.length === clicks) {
+                computerarray = [];
+                clicks++;
+                initialize(clicks);
+                clicks = 0;
+                winfunction();
             }
             console.log(`${clicks} clicks so far.`)
         })
@@ -34,12 +34,21 @@ function initialize(length = 4) {
     }
     console.log("Computer Array Generated.");
     let countup = 0;
-    
+
+
 
 
 }
 
-function highlight() {}
+function highlighter() {
+    document.getElementById(computerarray[countup]).classList.add("highlight");
+    console.log(`Color added to ID ${computerarray[countup]}`)
+    window.setTimeout(function () {
+        document.getElementById(computerarray[countup]).classList.remove("highlight");
+        console.log(`Color removed from ID ${computerarray[countup]}`)
+        countup++
+    }, 1000)
+}
 
 
 
@@ -48,8 +57,8 @@ function highlight() {}
 
 
 
-function winfunction() {console.log(`Win Function.  ${clicks} clicks.  ${computerarray.length} clicks this time.`)}
-function lossfunction() {console.log("You lose.  Haa haa.")}
+function winfunction() { console.log(`Win Function.  ${clicks} clicks.  ${computerarray.length} clicks this time.`) }
+function lossfunction() { console.log("You lose.  Haa haa.") }
 
 
 
