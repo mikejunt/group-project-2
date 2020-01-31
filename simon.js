@@ -1,6 +1,7 @@
 let computerarray = [];
 let playerarray = [];
-let clicks = 0
+let clicks = 0;
+let countup;
 
 
 
@@ -33,7 +34,7 @@ function initialize(length = 4) {
         computerarray.push(pick);
     }
     console.log("Computer Array Generated.");
-    let countup = 0;
+    countup = 0;
     highlighter();
 }
 
