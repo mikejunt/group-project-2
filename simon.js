@@ -34,10 +34,7 @@ function initialize(length = 4) {
     }
     console.log("Computer Array Generated.");
     let countup = 0;
-
-
-
-
+    highlighter();
 }
 
 function highlighter() {
@@ -48,6 +45,11 @@ function highlighter() {
         console.log(`Color removed from ID ${computerarray[countup]}`)
         countup++
     }, 1000)
+    window.setTimeout(function () {
+        if (countup < computerarray.length) {
+            highlighter()
+        }
+    }, 1500)
 }
 
 
