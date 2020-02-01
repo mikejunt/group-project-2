@@ -7,9 +7,8 @@
     <title>Simon</title>
     <link rel="stylesheet" type="text/css"media="screen" href="simon.css"/>
 </head>
-<body>
+<body id="body">
     <header>
-        <h1 class="text-center">Simon</h1>
         <h2 class="text-center heading game">Game <span id="gamecount">1</span></h2>
         <div class="text-center container content">
             <div class="text-center flex33">High Score:<span id="highscore">0</span></div>
@@ -21,7 +20,8 @@
             <button class="button-size inactive-state blue" value="blue" id="2"></button>
             <button class="button-size inactive-state yellow" value="yellow" id="4"></button>
             <button class="button-size inactive-state green" value="green" id="3"></button>
-        </div><span id="roundcount">1</span>
+            <button class="black" id="start"><span id="roundcount">1</span></button>
+        </div>
     </main>
     <script src="./simon.js"></script>
 </body>

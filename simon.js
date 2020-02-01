@@ -2,8 +2,6 @@
 
 // Create start button w listener to fire new game on click
 
-// Overhaul visible html design to look like Simon
-
 // Create empty text fields with appropriate styling, then make DOM innertext to display you lose, 
 // click for new game at appropriate time (eg via losegame function)
 
@@ -35,6 +33,12 @@ function buttonClick() {
                 if (parseInt(this.id) != computerarray[clicks]) {
                     enableplayer = false;
                     lossfunction()
+                    document.getElementById("body").classList.add("loss")
+                    window.setTimeout(function () {
+                        document.getElementById("body").classList.remove("loss");
+                        enableplayer = true;
+                        inprogress = false;
+                    }, 2000)
                 }
                 clicks++;
                 // win game logic and resulting actions
@@ -163,11 +167,10 @@ function lossfunction() {
     if (roundcount > highscore) {
         highscore = roundcount;
     }
-    roundcount = 0; 
+    roundcount = 0;
     document.getElementById("roundcount").innerText = roundcount;
     document.getElementById("highscore").innerText = highscore;
-    enableplayer = true;
-    inprogress = false;
+
 }
 
 // creates an initial array for the computer, delete after there is a functioning game start button

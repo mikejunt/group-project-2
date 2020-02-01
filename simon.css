@@ -1,4 +1,4 @@
-.main, .header{
+main, header{
     display: block;
     justify-content: space-around;
 }
@@ -12,12 +12,7 @@
     display: flex;
     flex-flow: row wrap;
 }
-.content{
-    width: 100%;
-    margin: auto;
-    height: 50px;
-    margin: 5px;
-}
+
 .buttonContainer{
     justify-content: space-around;
     width: 85vw;
@@ -25,10 +20,30 @@
     border-radius: 50%;
     border: solid 8px gray;
     overflow: hidden;
+    position: relative;
+    max-width: 700px;
+    max-height: 700px;
 }
 .button-size {
     width: 50%;
     height: auto;
+}
+.black {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: solid 8px gray;
+    width: 20vw;
+    height: 20vw;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 65px;
+    max-width: 175px;
+    max-height: 175px;
+    
 }
 .red{
     background-color: red;
@@ -41,6 +56,16 @@
 }
 .green{
     background-color: green;
+}
+
+.start {
+    background-color: darkslategrey;
+}
+.win {
+    background-color: forestgreen;
+}
+.loss {
+    background-color: red;
 }
 
 .inactive-state {
