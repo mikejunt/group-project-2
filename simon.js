@@ -31,10 +31,11 @@
 
 
 // creates variables needed by multiple functions so they have to exist globally.
-let computerarray = []; 
-let playerarray = []; 
+let computerarray = [];
+let playerarray = [];
 let clicks = 0;
 let countup = 0;
+let sequencer = 0;
 
 
 // primary game function - adds event listener on click which tracks core game functionality
@@ -65,6 +66,7 @@ function initialize(length = 4) {
     clicks = 0;
     countup = 0;
     playerarray = [];
+    sequencer = 1;
     // generates x random numbers between 1 and 4 and pushes each one into array holding computer's choices.
     for (let i = 0; i < length; i++) {
         let pick = (Math.floor(Math.random() * 4) + 1);
@@ -76,14 +78,14 @@ function initialize(length = 4) {
 
 // function that recursively causes buttons to light up in Simon's order
 function highlighter() {
-// immediately adds highlighter class to brighten button
+    // immediately adds highlighter class to brighten button
     document.getElementById(computerarray[countup]).classList.add("highlight");
-// creates 1 second timer after which the brightness is removed
+    // creates 1 second timer after which the brightness is removed
     window.setTimeout(function () {
         document.getElementById(computerarray[countup]).classList.remove("highlight");
         countup++;
     }, 1000)
-// creates an entirely separate 1.5 second timeout to run this function again until Simon's array complete
+    // creates an entirely separate 1.5 second timeout to run this function again until Simon's array complete
     window.setTimeout(function () {
         if (countup < computerarray.length) {
             highlighter()
@@ -94,11 +96,11 @@ function highlighter() {
 // for loop that adds mouseup and mousedown event listeners to highlight buttons when pressed
 for (let i = 1; i < 5; i++) {
     let target = document.getElementById(i);
-    target.addEventListener("mousedown", function (){
+    target.addEventListener("mousedown", function () {
         this.classList.add("highlight");
         console.log(`Mouse down on ${this.id}`)
     })
-    target.addEventListener("mouseup", function (){
+    target.addEventListener("mouseup", function () {
         this.classList.remove("highlight");
         console.log(`Mouse up on ${this.id}`)
     })
@@ -109,11 +111,72 @@ for (let i = 1; i < 5; i++) {
 
 
 function winfunction() {
+    // 1 2 3 4 1 2 3 4 1+3 2+4 1+3 2+4 all all
+    if (sequencer < 20) {
+        if (sequencer < 5) {
+            victory(sequencer);
+        }
+        else if (sequencer < 9) {
+            victory(sequencer - 4);
+        }
+        else if (sequencer < 13) {
+            victory(sequencer - 8);
+        }
+        else if (sequencer === 14 || 16) {
+            document.getElementById(1).classList.add("highlight");
+            document.getElementById(3).classList.add("highlight");
+            sequencer++;
+            console.log(`added highlight to 1 and 3`)
+            window.setTimeout(function () {
+                document.getElementById(1).classList.remove("highlight");
+                document.getElementById(3).classList.remove("highlight");
+                console.log(`removing highlight at 1 and 3`)
+            }, 250)
+            window.setTimeout(function () {
+                winfunction();
+                console.log(`triggering next sequencer loop when sequencer=${sequencer}`)
+            }, 500)
+        }
+        else if (sequencer === 15 || 17) {
+            document.getElementById(2).classList.add("highlight");
+            document.getElementById(4).classList.add("highlight");
+            sequencer++;
+            console.log(`added highlight to 2 and 4`)
+            window.setTimeout(function () {
+                document.getElementById(2).classList.remove("highlight");
+                document.getElementById(4).classList.remove("highlight");
+                console.log(`removing highlight at 2 and 4`)
+            }, 250)
+            window.setTimeout(function () {
+                winfunction();
+                console.log(`triggering next sequencer loop when sequencer=${sequencer}`)
+            }, 500)
+        }
+    }
     // adjusts variables for starting the next game
-    computerarray = [];
-    clicks++;    
-    // begins the next game
-    initialize(clicks);
+    else {
+        computerarray = [];
+        clicks++;
+        // begins the next game
+        initialize(clicks);
+    }
+}
+
+// recursive function used to make victory twirl
+
+function victory(iteration = 1) {
+    let twirl = document.getElementById(`${iteration}`);
+    twirl.classList.add("highlight");
+    console.log(`adding highlight ${twirl.id}`)
+    window.setTimeout(function () {
+        document.getElementById(`${iteration}`).classList.remove("highlight");
+        console.log(`removing highlight at ${twirl.id}`)
+        sequencer++
+    }, 250)
+    window.setTimeout(function () {
+        winfunction();
+        console.log(`triggering next sequencer loop when sequencer=${sequencer}`)
+    }, 500)
 }
 
 // this function will execute stuff that happens when you lose
@@ -126,7 +189,7 @@ function lossfunction() {
 }
 
 // creates an initial array of 4 for the computer, delete after there is a functioning game start button
-initialize(4)
+initialize(1)
 
 // invokes the function to make the buttons work, enabling the game
 buttonClick()
