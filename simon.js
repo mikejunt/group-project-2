@@ -52,30 +52,25 @@ function buttonClick() {
             clicks++;
             // win game logic and resulting actions
             if (computerarray.length === clicks && computerarray.join("") === playerarray.join("")) {
-                computerarray = [];
-                clicks++;
-                // initializing the next game may need to move into the winfunction
-                initialize(clicks);
-                clicks = 0;
                 winfunction();
             }
             console.log(`${clicks} clicks so far.`)
         })
     }
-    console.log("For loop complete.")
 }
 
 // function starts each round & determines Simon's choices. Argument = round length.
 function initialize(length = 4) {
+    // resets variables for next game cycle
+    clicks = 0;
+    countup = 0;
+    playerarray = [];
     // generates x random numbers between 1 and 4 and pushes each one into array holding computer's choices.
     for (let i = 0; i < length; i++) {
         let pick = (Math.floor(Math.random() * 4) + 1);
         computerarray.push(pick);
     }
-    console.log("Computer Array Generated.");
-    // takes computer's choices above and starts sequential highlighting to show them to player
-    countup = 0;
-    playerarray = [];
+    // see below
     highlighter();
 }
 
@@ -83,12 +78,10 @@ function initialize(length = 4) {
 function highlighter() {
 // immediately adds highlighter class to brighten button
     document.getElementById(computerarray[countup]).classList.add("highlight");
-    console.log(`Color added to ID ${computerarray[countup]}`)
 // creates 1 second timer after which the brightness is removed
     window.setTimeout(function () {
         document.getElementById(computerarray[countup]).classList.remove("highlight");
-        console.log(`Color removed from ID ${computerarray[countup]}`)
-        countup++
+        countup++;
     }, 1000)
 // creates an entirely separate 1.5 second timeout to run this function again until Simon's array complete
     window.setTimeout(function () {
@@ -117,7 +110,11 @@ for (let i = 1; i < 5; i++) {
 
 
 function winfunction() {
-    console.log(`Win Function.  ${clicks} clicks.  ${computerarray.length} clicks this time.`) 
+    // adjusts variables for starting the next game
+    computerarray = [];
+    clicks++;    
+    // begins the next game
+    initialize(clicks);
 }
 
 // this function will execute stuff that happens when you lose
