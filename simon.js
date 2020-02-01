@@ -53,7 +53,7 @@ function buttonClick() {
 // function starts each round & determines Simon's choices. Argument = round length.
 function initialize(length = 4) {
     console.log("am I happening twice?")
-    // resets variables for next game cycle
+    // adjusts or resets variables for next game cycle
     roundcount++;
     clicks = 0;
     countup = 0;
@@ -86,15 +86,17 @@ function highlighter() {
 }
 
 // for loop that adds mouseup and mousedown event listeners to highlight buttons when pressed
-for (let i = 1; i < 5; i++) {
-    let target = document.getElementById(i);
-    target.addEventListener("mousedown", function () {
-        this.classList.add("highlight");
-    })
-    target.addEventListener("mouseup", function () {
-        this.classList.remove("highlight");
-    })
-}
+(function () {
+    for (let i = 1; i < 5; i++) {
+        let target = document.getElementById(i);
+        target.addEventListener("mousedown", function () {
+            this.classList.add("highlight");
+        })
+        target.addEventListener("mouseup", function () {
+            this.classList.remove("highlight");
+        })
+    }
+})()
 
 // This function will execute things that happen when you win.
 // it is a complex loop to animate the buttons for game victory
@@ -135,8 +137,8 @@ function winfunction() {
         computerarray = [];
         clicks++;
         // begins the next game after a brief delay
-        window.setTimeout(function () { 
-            initialize(clicks) 
+        window.setTimeout(function () {
+            initialize(clicks)
         }, 2500)
     }
 }
@@ -149,8 +151,6 @@ function victory(iteration = 1) {
     sequencer++;
     window.setTimeout(function () {
         document.getElementById(`${iteration}`).classList.remove("highlight");
-    }, 250)
-    window.setTimeout(function () {
         winfunction();
     }, 250)
 }
@@ -166,11 +166,11 @@ function lossfunction() {
         highscore = roundcount;
         roundcount = 0;
     }
-    document.getElementById("highscore").innerText=highscore;
+    document.getElementById("highscore").innerText = highscore;
     console.log("You lose.  Haa haa.")
 }
 
-// creates an initial array of 4 for the computer, delete after there is a functioning game start button
+// creates an initial array for the computer, delete after there is a functioning game start button
 initialize(1)
 
 // invokes the function to make the buttons work, enabling the game
