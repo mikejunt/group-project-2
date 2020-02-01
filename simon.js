@@ -97,7 +97,7 @@ for (let i = 1; i < 5; i++) {
 }
 
 // This function will execute things that happen when you win.
-// any win-the-game effects and delay before starting the next game would happen here
+// it is a complex loop to animate the buttons for game victory
 
 
 function winfunction() {
@@ -152,7 +152,7 @@ function victory(iteration = 1) {
     }, 250)
     window.setTimeout(function () {
         winfunction();
-    }, 500)
+    }, 250)
 }
 
 // this function will execute stuff that happens when you lose
