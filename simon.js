@@ -2,18 +2,10 @@
 
 // Create start button w listener to fire new game on click
 
-// Create conditional so button can only be clicked when a game is not in progress or 
-// only starts if a game is not in progress
-// this will involve a global boolean variable and an if statement
-
-// Create conditional so 4 buttons cannot be activated unless game is in progress.
-
 // Overhaul visible html design to look like Simon
 
 // Create empty text fields with appropriate styling, then make DOM innertext to display you lose, 
 // click for new game at appropriate time (eg via losegame function)
-
-// round counter, game counter, highscore tracker, winning animation & delay between rounds created.  
 
 // Create a closure around finished js to bypass cheating (this is last as it makes debugging harder)
 
