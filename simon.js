@@ -105,14 +105,8 @@ function highlighter() {
 function winfunction() {
     // uses victory function to recur highlight 1, 2, 3, 4 in order
     if (sequencer < 17) {
-        if (sequencer < 5) {
+        if (sequencer < 13) {
             victory(sequencer);
-        }
-        else if (sequencer < 9) {
-            victory(sequencer - 4);
-        }
-        else if (sequencer < 13) {
-            victory(sequencer - 8);
         }
         // highlights and removes from all 4 buttons together 4 times
         else if (sequencer < 17) {
@@ -144,11 +138,11 @@ function winfunction() {
 // recursive function used to make victory twirl
 
 function victory(iteration = 1) {
-    let twirl = document.getElementById(`${iteration}`);
+    let twirl = document.getElementById(`${(iteration%4)+1}`);
     twirl.classList.add("highlight");
     sequencer++;
     window.setTimeout(function () {
-        document.getElementById(`${iteration}`).classList.remove("highlight");
+        document.getElementById(`${(iteration%4)+1}`).classList.remove("highlight");
         winfunction();
     }, 250)
 }
