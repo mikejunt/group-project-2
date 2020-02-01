@@ -1,23 +1,60 @@
-let computerarray = [];
-let playerarray = []
+// to do list
+
+// Create start button w listener to fire new game on click
+
+// Create conditional so button can only be clicked when a game is not in progress or 
+// only starts if a game is not in progress
+// this will involve a global boolean variable and an if statement
+
+// Complete win logic comparing arrays. Probably by converting into strings.
+
+// Create html fields to display current game round in middle of start button
+
+// Create counter and innertext edit to display current round.
+// this would be added to initialize, before the first for loop.  
+
+// Add a delay between winning and start of next round, probably with a settimeout
+// this involves moving initializing next game into wingame function
+
+// Overhaul visible html design to look like Simon
+
+// Create empty text fields with appropriate styling, then make DOM innertext to display you lose, 
+// click for new game at appropriate time (eg via losegame function)
+
+// Add some kind of round winning animation.  This could provide the delay between rounds. 
+// this would go in the wingame animation
+
+// Potentially add a high score feature. Max rounds survived.   And requisite function to write it to page.
+// this would go in the losegame function
+
+// Create a closure around finished js to bypass cheating (this is last as it makes debugging harder)
+
+
+// creates variables needed by multiple functions so they have to exist globally.
+let computerarray = []; 
+let playerarray = []; 
 let clicks = 0;
-let countup;
+let countup = 0;
 
 
+// primary game function - adds event listener on click which tracks core game functionality
 
 function buttonClick() {
     for (let i = 1; i <= 4; i++) {
         let buttons = document.getElementById(i);
         buttons.addEventListener("click", function () {
             playerarray.push(parseInt(this.id));
+            // lose game logic and resulting actions
             if (parseInt(this.id) != computerarray[clicks]) {
-                console.log(`Didnt Match loss follows. ${this.id} ${computerarray[clicks]}`);
+                console.log(`Didnt Match, loss follows. ${this.id} ${computerarray[clicks]}`);
                 lossfunction()
             }
             clicks++;
+            // win game logic and resulting actions
             if (computerarray.length === clicks && computerarray === playerarray) {
                 computerarray = [];
                 clicks++;
+                // initializing the next game may need to move into the winfunction
                 initialize(clicks);
                 clicks = 0;
                 winfunction();
@@ -28,25 +65,32 @@ function buttonClick() {
     console.log("For loop complete.")
 }
 
+// function starts each round & determines Simon's choices. Argument = round length.
 function initialize(length = 4) {
+    // generates x random numbers between 1 and 4 and pushes each one into array holding computer's choices.
     for (let i = 0; i < length; i++) {
         let pick = (Math.floor(Math.random() * 4) + 1);
         computerarray.push(pick);
     }
     console.log("Computer Array Generated.");
+    // takes computer's choices above and starts sequential highlighting to show them to player
     countup = 0;
     playerarray = [];
     highlighter();
 }
 
+// function that recursively causes buttons to light up in Simon's order
 function highlighter() {
+// immediately adds highlighter class to brighten button
     document.getElementById(computerarray[countup]).classList.add("highlight");
     console.log(`Color added to ID ${computerarray[countup]}`)
+// creates 1 second timer after which the brightness is removed
     window.setTimeout(function () {
         document.getElementById(computerarray[countup]).classList.remove("highlight");
         console.log(`Color removed from ID ${computerarray[countup]}`)
         countup++
     }, 1000)
+// creates an entirely separate 1.5 second timeout to run this function again until Simon's array complete
     window.setTimeout(function () {
         if (countup < computerarray.length) {
             highlighter()
@@ -54,24 +98,42 @@ function highlighter() {
     }, 1500)
 }
 
+// for loop that adds mouseup and mousedown event listeners to highlight buttons when pressed
 for (let i = 1; i < 5; i++) {
     let target = document.getElementById(i);
-    console.log (`target picked, it is ${target.id}`)
-    target.addEventListener("mousedown", function () { this.classList.add("highlight");console.log(`Mouse down on ${this.id}`) });
-    target.addEventListener("mouseup", function () { this.classList.remove("highlight"); console.log(`Mouse up on ${this.id}`) })
+    target.addEventListener("mousedown", function (){
+        this.classList.add("highlight");
+        console.log(`Mouse down on ${this.id}`)
+    })
+    target.addEventListener("mouseup", function (){
+        this.classList.remove("highlight");
+        console.log(`Mouse up on ${this.id}`)
+    })
+}
+
+// This function will execute things that happen when you win.
+// currently the next game is started automatically by the win-the-game logic
+// to execute a 'win the game' animation, starting the next game would need to move down here
+
+
+function winfunction() {
+    console.log(`Win Function.  ${clicks} clicks.  ${computerarray.length} clicks this time.`) 
+}
+
+// this function will execute stuff that happens when you lose
+// this will mostly consist of feedback to the player (You Lose text, etc)
+// as well as potentially re-enabling the start game button.
+// this is also where a high score variable would be tracked and high score written onto the document.  
+
+function lossfunction() {
+    console.log("You lose.  Haa haa.")
 }
 
 
 
-
-
-function winfunction() { console.log(`Win Function.  ${clicks} clicks.  ${computerarray.length} clicks this time.`) }
-function lossfunction() { console.log("You lose.  Haa haa.") }
-
-
-
-
+// creates an initial array of 4 for the computer, delete after there is a functioning game start button
 initialize(4)
-console.log(computerarray)
+
+// invokes the function to make the buttons work, enabling the game
 buttonClick()
 
