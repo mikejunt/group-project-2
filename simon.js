@@ -6,7 +6,7 @@
 // only starts if a game is not in progress
 // this will involve a global boolean variable and an if statement
 
-// Complete win logic comparing arrays. Probably by converting into strings.
+// Create conditional so 4 buttons cannot be activated unless game is in progress.
 
 // Create html fields to display current game round in middle of start button
 
