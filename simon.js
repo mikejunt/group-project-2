@@ -120,10 +120,8 @@ function winfunction() {
             bigblink = document.getElementsByClassName("inactive-state");
             for (let i = 0; i < 4; i++) {
                 bigblink[i].classList.add("highlight")
-            }
-            for (let j = 0; j < 4; j++) {
                 window.setTimeout(function () {
-                    bigblink[j].classList.remove("highlight");
+                    bigblink[i].classList.remove("highlight");
                 }, 250)
             }
             window.setTimeout(function () {
