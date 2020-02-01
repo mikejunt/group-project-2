@@ -47,26 +47,25 @@ function buttonClick() {
             playerarray.push(parseInt(this.id));
             // lose game logic and resulting actions
             if (parseInt(this.id) != computerarray[clicks]) {
-                console.log(`Didnt Match, loss follows. ${this.id} ${computerarray[clicks]}`);
                 lossfunction()
             }
             clicks++;
             // win game logic and resulting actions
             if (computerarray.length === clicks && computerarray.join("") === playerarray.join("")) {
+                sequencer = 1;
                 winfunction();
             }
-            console.log(`${clicks} clicks so far.`)
         })
     }
 }
 
 // function starts each round & determines Simon's choices. Argument = round length.
 function initialize(length = 4) {
+    console.log("am I happening twice?")
     // resets variables for next game cycle
     clicks = 0;
     countup = 0;
     playerarray = [];
-    sequencer = 1;
     // generates x random numbers between 1 and 4 and pushes each one into array holding computer's choices.
     for (let i = 0; i < length; i++) {
         let pick = (Math.floor(Math.random() * 4) + 1);
@@ -98,11 +97,9 @@ for (let i = 1; i < 5; i++) {
     let target = document.getElementById(i);
     target.addEventListener("mousedown", function () {
         this.classList.add("highlight");
-        console.log(`Mouse down on ${this.id}`)
     })
     target.addEventListener("mouseup", function () {
         this.classList.remove("highlight");
-        console.log(`Mouse up on ${this.id}`)
     })
 }
 
@@ -111,8 +108,8 @@ for (let i = 1; i < 5; i++) {
 
 
 function winfunction() {
-    // 1 2 3 4 1 2 3 4 1+3 2+4 1+3 2+4 all all
-    if (sequencer < 20) {
+    // uses victory function to recur highlight 1, 2, 3, 4 in order
+    if (sequencer < 17) {
         if (sequencer < 5) {
             victory(sequencer);
         }
@@ -122,43 +119,32 @@ function winfunction() {
         else if (sequencer < 13) {
             victory(sequencer - 8);
         }
-        else if (sequencer === 14 || 16) {
-            document.getElementById(1).classList.add("highlight");
-            document.getElementById(3).classList.add("highlight");
+        // highlights and removes from all 4 buttons together 4 times
+        else if (sequencer < 17) {
             sequencer++;
-            console.log(`added highlight to 1 and 3`)
-            window.setTimeout(function () {
-                document.getElementById(1).classList.remove("highlight");
-                document.getElementById(3).classList.remove("highlight");
-                console.log(`removing highlight at 1 and 3`)
-            }, 250)
+            bigblink = document.getElementsByClassName("inactive-state");
+            for (let i = 0; i < 4; i++) {
+                bigblink[i].classList.add("highlight")
+            }
+            for (let j = 0; j < 4; j++) {
+                window.setTimeout(function () {
+                    bigblink[j].classList.remove("highlight");
+                }, 250)
+            }
             window.setTimeout(function () {
                 winfunction();
-                console.log(`triggering next sequencer loop when sequencer=${sequencer}`)
-            }, 500)
-        }
-        else if (sequencer === 15 || 17) {
-            document.getElementById(2).classList.add("highlight");
-            document.getElementById(4).classList.add("highlight");
-            sequencer++;
-            console.log(`added highlight to 2 and 4`)
-            window.setTimeout(function () {
-                document.getElementById(2).classList.remove("highlight");
-                document.getElementById(4).classList.remove("highlight");
-                console.log(`removing highlight at 2 and 4`)
-            }, 250)
-            window.setTimeout(function () {
-                winfunction();
-                console.log(`triggering next sequencer loop when sequencer=${sequencer}`)
             }, 500)
         }
     }
-    // adjusts variables for starting the next game
+    // proceeds to adjust variables and restart next game.
     else {
+        console.log("resetting variables and initiating next round")
         computerarray = [];
         clicks++;
-        // begins the next game
-        initialize(clicks);
+        // begins the next game after a brief delay
+        window.setTimeout(function () { 
+            initialize(clicks) 
+        }, 2500)
     }
 }
 
@@ -167,15 +153,12 @@ function winfunction() {
 function victory(iteration = 1) {
     let twirl = document.getElementById(`${iteration}`);
     twirl.classList.add("highlight");
-    console.log(`adding highlight ${twirl.id}`)
+    sequencer++;
     window.setTimeout(function () {
         document.getElementById(`${iteration}`).classList.remove("highlight");
-        console.log(`removing highlight at ${twirl.id}`)
-        sequencer++
     }, 250)
     window.setTimeout(function () {
         winfunction();
-        console.log(`triggering next sequencer loop when sequencer=${sequencer}`)
     }, 500)
 }
 
