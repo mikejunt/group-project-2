@@ -51,7 +51,7 @@ function buttonClick() {
             }
             clicks++;
             // win game logic and resulting actions
-            if (computerarray.length === clicks && computerarray === playerarray) {
+            if (computerarray.length === clicks && computerarray.join("") === playerarray.join("")) {
                 computerarray = [];
                 clicks++;
                 // initializing the next game may need to move into the winfunction
