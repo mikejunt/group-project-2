@@ -105,8 +105,7 @@ for (let i = 1; i < 5; i++) {
 }
 
 // This function will execute things that happen when you win.
-// currently the next game is started automatically by the win-the-game logic
-// to execute a 'win the game' animation, starting the next game would need to move down here
+// any win-the-game effects and delay before starting the next game would happen here
 
 
 function winfunction() {
@@ -125,8 +124,6 @@ function winfunction() {
 function lossfunction() {
     console.log("You lose.  Haa haa.")
 }
-
-
 
 // creates an initial array of 4 for the computer, delete after there is a functioning game start button
 initialize(4)
