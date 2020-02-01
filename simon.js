@@ -27,6 +27,8 @@ let sequencer = 0;
 let highscore = 0;
 let roundcount = 0;
 let gamecount = 0;
+let enableplayer = true;
+let inprogress = false;
 
 
 // primary game function - adds event listener on click which tracks core game functionality
@@ -35,16 +37,20 @@ function buttonClick() {
     for (let i = 1; i <= 4; i++) {
         let buttons = document.getElementById(i);
         buttons.addEventListener("click", function () {
-            playerarray.push(parseInt(this.id));
-            // lose game logic and resulting actions
-            if (parseInt(this.id) != computerarray[clicks]) {
-                lossfunction()
-            }
-            clicks++;
-            // win game logic and resulting actions
-            if (computerarray.length === clicks && computerarray.join("") === playerarray.join("")) {
-                sequencer = 1;
-                winfunction();
+            if (enableplayer === true && inprogress === true) {
+                playerarray.push(parseInt(this.id));
+                // lose game logic and resulting actions
+                if (parseInt(this.id) != computerarray[clicks]) {
+                    enableplayer = false;
+                    lossfunction()
+                }
+                clicks++;
+                // win game logic and resulting actions
+                if (computerarray.length === clicks && computerarray.join("") === playerarray.join("")) {
+                    sequencer = 1;
+                    enableplayer = false;
+                    winfunction();
+                }
             }
         })
     }
@@ -52,19 +58,20 @@ function buttonClick() {
 
 // function starts each round & determines Simon's choices. Argument = round length.
 function initialize(length = 4) {
-    console.log("am I happening twice?")
     // adjusts or resets variables for next game cycle
+    enableplayer = false;
     roundcount++;
     clicks = 0;
     countup = 0;
     playerarray = [];
+    inprogress = true;
     document.getElementById("roundcount").innerText = roundcount;
     // generates x random numbers between 1 and 4 and pushes each one into array holding computer's choices.
     for (let i = 0; i < length; i++) {
         let pick = (Math.floor(Math.random() * 4) + 1);
         computerarray.push(pick);
     }
-    // see below
+    // disables player input during Simon's sequence display
     highlighter();
 }
 
@@ -82,6 +89,10 @@ function highlighter() {
         if (countup < computerarray.length) {
             highlighter()
         }
+        // enables buttons again when Simon's sequence ends
+        else {
+            enableplayer = true;
+        }
     }, 1500)
 }
 
@@ -90,10 +101,14 @@ function highlighter() {
     for (let i = 1; i < 5; i++) {
         let target = document.getElementById(i);
         target.addEventListener("mousedown", function () {
-            this.classList.add("highlight");
+            if (enableplayer === true && inprogress === true) {
+                this.classList.add("highlight");
+            }
         })
         target.addEventListener("mouseup", function () {
-            this.classList.remove("highlight");
+            if (enableplayer === true && inprogress === true) {
+                this.classList.remove("highlight");
+            }
         })
     }
 })()
@@ -125,7 +140,6 @@ function winfunction() {
     }
     // proceeds to adjust variables and restart next game.
     else {
-        console.log("resetting variables and initiating next round")
         computerarray = [];
         clicks++;
         // begins the next game after a brief delay
@@ -138,11 +152,11 @@ function winfunction() {
 // recursive function used to make victory twirl
 
 function victory(iteration = 1) {
-    let twirl = document.getElementById(`${(iteration%4)+1}`);
+    let twirl = document.getElementById(`${(iteration % 4) + 1}`);
     twirl.classList.add("highlight");
     sequencer++;
     window.setTimeout(function () {
-        document.getElementById(`${(iteration%4)+1}`).classList.remove("highlight");
+        document.getElementById(`${(iteration % 4) + 1}`).classList.remove("highlight");
         winfunction();
     }, 250)
 }
@@ -156,10 +170,12 @@ function lossfunction() {
     roundcount--;
     if (roundcount > highscore) {
         highscore = roundcount;
-        roundcount = 0;
     }
+    roundcount = 0; 
+    document.getElementById("roundcount").innerText = roundcount;
     document.getElementById("highscore").innerText = highscore;
-    console.log("You lose.  Haa haa.")
+    enableplayer = true;
+    inprogress = false;
 }
 
 // creates an initial array for the computer, delete after there is a functioning game start button
