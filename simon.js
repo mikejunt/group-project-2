@@ -1,14 +1,23 @@
 // to do list
 
-// Create start button w listener to fire new game on click
+// improve html styling
+// add more text (click to start, you lost, click for new game, etc)
+// bells and whistles like sounds, etc
+// find solution for ability to click on hidden parts of button DIVs and still register result
+// try clicking in whitespace where square part of div is hidden outside play area for example
+// find better feedback mechanism for start button
+// opacity does not work here, it becomes see-thru and you can see elements behind it
+// my "you lost" red screen feedback is awful and could be improved
+// possibly add some kind of user feedback telling them when they become able to click in each round
+// try to play fast and you will see how you can start clicking before the buttons are enabled.
 
-// Create empty text fields with appropriate styling, then make DOM innertext to display you lose, 
-// click for new game at appropriate time (eg via losegame function)
 
-// Create a closure around finished js to bypass cheating (this is last as it makes debugging harder)
+
 
 
 // creates variables needed by multiple functions so they have to exist globally.
+
+(function () {
 let computerarray = [];
 let playerarray = [];
 let clicks = 0;
@@ -109,6 +118,25 @@ function highlighter() {
     }
 })()
 
+
+let sbutton = document.getElementById("start");
+sbutton.addEventListener("click", function () {
+    if (enableplayer === true && inprogress === false) {
+        computerarray = []
+        initialize(4);
+    }
+})
+sbutton.addEventListener("mousedown", function () {
+    if (enableplayer === true && inprogress === false) {
+        this.classList.add("start");
+    }
+})
+sbutton.addEventListener("mouseup", function () {
+    if (enableplayer === true && inprogress === false) {
+        this.classList.remove("start");
+    }
+})
+
 // This function will execute things that happen when you win.
 // it is a complex loop to animate the buttons for game victory
 
@@ -173,9 +201,6 @@ function lossfunction() {
 
 }
 
-// creates an initial array for the computer, delete after there is a functioning game start button
-initialize(1)
-
 // invokes the function to make the buttons work, enabling the game
 buttonClick()
-
+})()

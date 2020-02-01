@@ -59,13 +59,19 @@ main, header{
 }
 
 .start {
-    background-color: darkslategrey;
+    background-color: rgb(50,50,50)
 }
 .win {
     background-color: forestgreen;
 }
 .loss {
     background-color: red;
+}
+
+.spacer {
+    width: 80vw;
+    display: inline-block;
+    max-width: 575px;
 }
 
 .inactive-state {
