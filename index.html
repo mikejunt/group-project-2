@@ -10,10 +10,9 @@
 <body>
     <header>
         <h1 class="text-center">Simon</h1>
-        <h2 class="text-center heading game">Game <span id="game">1</span></h2>
+        <h2 class="text-center heading game">Game <span id="gamecount">1</span></h2>
         <div class="text-center container content">
-            <div class="text-center flex33">Wins: <span id="wins">0</span></div>
-            <div class="text-center flex33">Losses: <span id="losses">0</span></div>
+            <div class="text-center flex33">High Score:<span id="highscore">0</span></div>
         </div>
     </header>
     <main>
@@ -22,7 +21,7 @@
             <button class="inactive-state blue" value="blue" id="2"></button>
             <button class="inactive-state yellow" value="yellow" id="3"></button>
             <button class="inactive-state green" value="green" id="4"></button>
-        </div>
+        </div><span id="roundcount">1</span>
     </main>
     <script src="./simon.js"></script>
 </body>

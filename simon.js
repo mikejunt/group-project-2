@@ -8,24 +8,12 @@
 
 // Create conditional so 4 buttons cannot be activated unless game is in progress.
 
-// Create html fields to display current game round in middle of start button
-
-// Create counter and innertext edit to display current round.
-// this would be added to initialize, before the first for loop.  
-
-// Add a delay between winning and start of next round, probably with a settimeout
-// this involves moving initializing next game into wingame function
-
 // Overhaul visible html design to look like Simon
 
 // Create empty text fields with appropriate styling, then make DOM innertext to display you lose, 
 // click for new game at appropriate time (eg via losegame function)
 
-// Add some kind of round winning animation.  This could provide the delay between rounds. 
-// this would go in the wingame animation
-
-// Potentially add a high score feature. Max rounds survived.   And requisite function to write it to page.
-// this would go in the losegame function
+// round counter, game counter, highscore tracker, winning animation & delay between rounds created.  
 
 // Create a closure around finished js to bypass cheating (this is last as it makes debugging harder)
 
@@ -36,6 +24,9 @@ let playerarray = [];
 let clicks = 0;
 let countup = 0;
 let sequencer = 0;
+let highscore = 0;
+let roundcount = 0;
+let gamecount = 0;
 
 
 // primary game function - adds event listener on click which tracks core game functionality
@@ -63,9 +54,11 @@ function buttonClick() {
 function initialize(length = 4) {
     console.log("am I happening twice?")
     // resets variables for next game cycle
+    roundcount++;
     clicks = 0;
     countup = 0;
     playerarray = [];
+    document.getElementById("roundcount").innerText = roundcount;
     // generates x random numbers between 1 and 4 and pushes each one into array holding computer's choices.
     for (let i = 0; i < length; i++) {
         let pick = (Math.floor(Math.random() * 4) + 1);
@@ -165,9 +158,15 @@ function victory(iteration = 1) {
 // this function will execute stuff that happens when you lose
 // this will mostly consist of feedback to the player (You Lose text, etc)
 // as well as potentially re-enabling the start game button.
-// this is also where a high score variable would be tracked and high score written onto the document.  
+// now accurately tracks high score  
 
 function lossfunction() {
+    roundcount--;
+    if (roundcount > highscore) {
+        highscore = roundcount;
+        roundcount = 0;
+    }
+    document.getElementById("highscore").innerText=highscore;
     console.log("You lose.  Haa haa.")
 }
 
