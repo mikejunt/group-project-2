@@ -164,11 +164,11 @@ function winfunction() {
     }
     // proceeds to adjust variables and restart next game.
     else {
-        computerarray = [];
+        // computerarray = [];
         clicks++;
         // begins the next game after a brief delay
         window.setTimeout(function () {
-            initialize(clicks)
+            initialize(1)
         }, 2500)
     }
 }
