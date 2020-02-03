@@ -123,7 +123,7 @@ let sbutton = document.getElementById("start");
 sbutton.addEventListener("click", function () {
     if (enableplayer === true && inprogress === false) {
         computerarray = []
-        initialize(4);
+        initialize(1);
     }
 })
 sbutton.addEventListener("mousedown", function () {
